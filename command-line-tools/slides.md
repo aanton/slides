@@ -772,3 +772,5 @@ layout: false
 * jq
 * PGP
 * SSH
+
+## Thanks ! Feedback is much appreciated !
