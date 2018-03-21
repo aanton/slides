@@ -717,22 +717,22 @@ The majority of programs for Xorg (the most popular display server among Linux u
   * It behaves like the single-clipboard system on Windows
   * It can also handle multiple data formats
 * The `PRIMARY` selection is used for the currently selected text, even if it is not explicitly copied, and for middle-mouse-click pasting
-  * Nothing is copied anywhere until it is pasted. If you select some word in a terminal window, close the terminal and then want to paste it somewhere else, it will not work because the terminal is gone and the text has not been copied anywhere.
+  * Nothing is copied anywhere until it is pasted. If you select some word in a terminal window, close the terminal and then want to paste it somewhere else, it will not work because the terminal is gone and the text has not been copied anywhere
   * In some cases, pasting is also possible with a keyboard shortcut
 
 ---
 
 ## Terminal emulators
 
-* Terminal emulators already use `CTRL-C` & `CTRL-V`
-* Most terminal emulators supports the key combinations `CTRL-INSERT` to copy and `SHIFT-INSERT` to paste
+* Terminal emulators already use `<CTRL-C>` & `<CTRL-V>` for theirs own purposes
+* Most terminal emulators supports the key combinations `<CTRL-INSERT>` to copy and `<SHIFT-INSERT>` to paste
   * These shorcuts are also supported by other applications
   * But `PRIMARY` or `CLIPBOARD` selection ?
 * Gnome Terminal
-  * Copy & paste to/from the `CLIPBOARD` selection is done using `CTRL-SHIFT-C`/`CTRL-SHIFT-V`
-  * Paste from the `PRIMARY` selection: `SHIFT-INSERT`
-  * Paste from the `CLIPBOARD` selection: `CTRL-SHIFT-INSERT` !!
-  * Copy to the `CLIPBOARD` selection: `CTRL-INSERT` !!
+  * Copy & paste to/from the `CLIPBOARD` selection is done using `<CTRL-SHIFT-C>`/`<CTRL-SHIFT-V>`
+  * Paste from the `PRIMARY` selection: `<SHIFT-INSERT>`
+  * Paste from the `CLIPBOARD` selection: `<CTRL-SHIFT-INSERT>` !!
+  * Copy to the `CLIPBOARD` selection: `<CTRL-INSERT>` !!
 
 ---
 
@@ -746,9 +746,11 @@ TODO: xclip & xsel
 
 * Enable users to manipulate the clipboard
 * Store all the clipboard history and offers an interface to select an ocurrence
-* Optional full-text search
+* Optional text search (fixed, regex or fuzzy)
 * Optional `PRIMARY` and `CLIPBOARD` selections synchronization
 * GUI & CLI modes
+
+My current clipboard manager is [ClipIt](https://sourceforge.net/projects/gtkclipit/)
 
 ---
 
