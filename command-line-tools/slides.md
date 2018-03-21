@@ -1,5 +1,9 @@
 # Command-line tools
 
+## Whoami
+
+@aanton
+
 ## Agenda
 
 * ZSH
@@ -28,10 +32,10 @@ Its configuration is usually managed in the `.zshrc` file.
 
 ## Installation
 
-* Install if necessary
+* Check if already installed & install if necessary
 * Make it your default shell (logout is required)
 
-```shell
+```bash
 cat /etc/shells
 sudo apt install zsh
 
@@ -44,18 +48,19 @@ chsh -s $(which zsh)
 
 The zsh scripting is very similar to bash with only small differences, but the differences are large enough that migrating scripts is not trivially easy. 
 
-Bash is recommended for scripting. Use shebang in your scripts!
+Bash is recommended for scripting. Use **shebang** in your scripts!
 
 ---
 
 ## Context based completion & navigation
 
 * Context based `<TAB>` completion
-  * Filename: `cat re<TAB>`
-  * Fuzzy matching to extend directories: `cd /p/l/p<TAB>` expands to `cd /projects/laravel/public`
-  * Commands: `git c<TAB>`
-  * Paramaters: `git commit -<TAB>`
-  * Kill completion (search by text): `kill php<TAB>`
+  * Filenames/Directories: `cat re<TAB>`
+  * Directories (only): `cd re<TAB>`
+    * Fuzzy matching to extend directories: `cd /p/l/p<TAB>` expands to `cd /projects/laravel/public`
+  * Commands arguments: `git c<TAB>`
+  * Commands parameters: `git commit -<TAB>`
+  * Process completion in `kill` command: `kill php<TAB>`
   * Remote filename completion in ssh: `scp remote:<TAB>`
 * Navigation using `<TAB>` & `<UP>/<DOWN>/<LEFT>/<RIGHT>`
 
@@ -64,15 +69,14 @@ Bash is recommended for scripting. Use shebang in your scripts!
 ## Globbing (complex pattern matching mechanism)
 
 * Recursive search: `**/`
-* Open a file or files anywhere in the hierarchy: `vim **/index.html`
-* Search a string in files anywhere in the hierarchy: `cat **/*.html | grep title`
-* Print all regular files: `print -l **/*(.)`
-* Print all symlink files: `print -l **/*(@)`
-* Print all directories: `print -l **/*(/)`
+* Open HTML files anywhere in the hierarchy: `vim **/index.html`
+* Search a string in HTML files anywhere in the hierarchy: `cat **/*.html | grep title`
+* List all regular files in the hierarchy,: `ls -l **/*(.)`
+* List all symlink files in the hierarchy: `ls -l **/*(@)`
+* List all directories: `print -l **/*(/)`
 * List all PNG files in the hierarchy: `ls -l **/*.png`
 * List all PNG & GIF files in the hierarchy: `ls -l **/*.(png|gif)`
 * List all files by pattern in the hierarchy: `ls -l **/[a-e]*.png`
-* List all regular files in the hierarchy, but not directories themselves: `ls -l **/*(.)`
 * List 10 recent files: `ls -lt **/*(.om[1,10])`
 * List 10 bigger files: `ls -lt **/*(.OL[1,10])`
 * List empty files: `ls -l **/*(L0)`
@@ -94,11 +98,15 @@ Bash is recommended for scripting. Use shebang in your scripts!
 * Global aliases: words that can be used anywhere on the command line, thus you can give certain files, filters or pipes a short name
 * Suffix aliases: tie a file suffix
 
-```shell
-alias -g L="|less"
+```bash
+alias -g L="| less"
 ls -lR L
 
-alias -s txt=sublime-text
+alias -g SR="| sort | uniq -c | sort -n | tail -10"
+fd --type f | awk -F/ '{print $NF}' SR
+
+alias -s txt=code
+alias -s html=google-chrome
 ```
 
 ---
@@ -106,10 +114,10 @@ alias -s txt=sublime-text
 ## History commands
 
 * Sharing of command history among all running shells
-* Write the first characters of a command & navigate (using `<UP>`) through the command history that match those characters
-* Avoid duplicate commands in the history (remove the older duplicated one)
+* Write the first characters of a command & use `<UP>` to navigate through the commands in the history that starts with those characters
+* Avoid duplicate commands in the history (remove the older duplicated one): `hist_ignore_all_dups`
 
-```shell
+```bash
 setopt hist_ignore_all_dups
 ```
 
@@ -117,7 +125,7 @@ setopt hist_ignore_all_dups
 
 ## Miscellaneous
 
-* Change partially the current path: `cd user1 user2`
+* Change partially the current path: `cd old new`
 * Repeat last command with replacements
   * Repeat last command: `r`
   * With replacement: `r old=new`
@@ -129,20 +137,22 @@ setopt hist_ignore_all_dups
 * Spelling correction
 * Themeable prompts: left & right
 * Loadable modules (eg. zmv: massive rename)
-* Frameworks: [ohmyzsh](./ohmyzsh.md)
+* Frameworks (eg. ohmyzsh)
 
 ---
 
 ## My custom aliases in .zshrc
 
-```shell
+```bash
 # Alias Git
 alias gd="git diff"
 alias gs="git status"
 alias ga="git add -u"
 alias gc="git commit -v"
-alias gl="git log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=iso --all -20"
-alias gll="git log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=iso -20"
+alias gl="git log --pretty=format:\"%h %ad | %s%d [%an]\" \
+  --graph --date=iso --all -20"
+alias gll="git log --pretty=format:\"%h %ad | %s%d [%an]\" \
+  --graph --date=iso -20"
 alias gf="git fetch -p"
 alias gpull="git pull --ff-only"
 alias gpush="git push origin master"
@@ -150,8 +160,13 @@ alias glast="git show -1"
 
 # Alias Docker
 alias ddf="docker system df"
-alias dip="docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"
-alias dips="docker inspect --format '{{$e := . }}{{with .NetworkSettings}} {{$e.Name}} {{range $index, $net := .Networks}}{{$index}} {{.IPAddress}} {{end}}{{end}}' $(docker ps -q)"
+alias dip="docker inspect --format \
+  '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"
+alias dips="docker inspect --format \
+  '{{$e := . }}{{with .NetworkSettings}} {{$e.Name}} \
+    {{range $index, $net := .Networks}}{{$index}} {{.IPAddress}} \
+    {{end}}{{end}}' \
+  $(docker ps -q)"
 ```
 
 ---
@@ -181,43 +196,49 @@ Oh-My-Zsh is an open source, community-driven framework for managing your ZSH co
 * Prerequisites: zsh (>= 4.3.9), curl/wget
 * Download & install
 
-```shell
-sudo apt install zsh
+```bash
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 ```
 
 ---
 
-## Theme "Agnoster"
+## Themes
 
-* Install "Powerline-patched font" & test it
+* [Official themes](https://github.com/robbyrussell/oh-my-zsh/wiki/themes)
+* Many additional themes
+  * [Powerlevel9k](https://github.com/bhilburn/powerlevel9k)
+  * [Pure](https://github.com/sindresorhus/pure)
 
-```shell
+```bash
+# Install "Powerline-patched font"
 sudo apt-get install fonts-powerline
+
+# Test the font
 echo "\ue0b0 \u00b1 \ue0a0 \u27a6 \u2718 \u26a1 \u2699"
 ```
 
-* Set & configure the theme
+* My current theme: [Agnoster](https://github.com/agnoster/agnoster-zsh-theme)
+  * Simple configuration to hide my user name
 
-```shell
+```bash
 ZSH_THEME="agnoster"
 DEFAULT_USER="aanton"
 ```
-
-[Agnoster theme](https://github.com/agnoster/agnoster-zsh-theme)
 
 ---
 
 ## Plugins
 
-> Just update the plugins parameter in the .zshrc
-
-* composer
-* docker
-* docker-composer
-* git
-* sudo
-* web-search
+* [Official plugins](https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins)
+  * composer
+  * docker
+  * docker-composer
+  * git
+  * sudo
+  * web-search
+  * ... and much more
+* Additional plugins can be installed
+* Plugins must be enabled in the .zshrc file, adding theirs names in the `plugins` parameter
 
 ---
 
@@ -237,11 +258,11 @@ Tracks your most used directories, based on 'frecency'. After a short learning p
 
 ## Installation
 
-```shell
+```bash
 # Download to home directory
 curl -fsSL https://raw.githubusercontent.com/rupa/z/master/z.sh -o ~/z.sh
 
-# Add to .zshrc
+# Add to .zshrc or .bashrc
 [ -f ~/z.sh ] && source ~/z.sh
 ```
 
@@ -249,7 +270,7 @@ curl -fsSL https://raw.githubusercontent.com/rupa/z/master/z.sh -o ~/z.sh
 
 ## Usage
 
-```shell
+```bash
 # Will match the most frecency directory from root (/) that contains foo
 z foo
 
@@ -259,13 +280,13 @@ z foo bar
 
 ---
 
-## Options
+## Command options
 
-* List only: `-l`
-* Echo the best match, don't cd: `-e`
-* Restrict matches to subdirectories of the current directory: `-c`
-* Match by rank only: `-r`
-* Match by recent access only: `-t`
+* List only: `z -l`
+* Echo the best match, don't cd: `z -e`
+* Restrict matches to subdirectories of the current directory: `z -c`
+* Match by rank only: `z -r`
+* Match by recent access only: `z -t`
 
 ---
 
@@ -281,12 +302,19 @@ A simple, fast and user-friendly alternative to `find`
 
 ---
 
+## Installation
+
+* On Debian/Ubuntu download the adequate `.deb` package from the [release page](https://github.com/sharkdp/fd/releases) and install it using `sudo dpkg -i <package>`
+* Also can be installed using `cargo`, the Rust package manager: `cargo install fd-find`
+
+---
+
 ## Simple syntax
 
-```shell
+```bash
 fd <pattern>
 
-# find alternative but not a regex!
+# find alternative
 find -iname "*pattern*"
 ```
 
@@ -294,7 +322,7 @@ find -iname "*pattern*"
 
 ## Sensible defaults
 
-> While it does not seek to mirror all of `find` powerful functionality, it provides sensible (opinionated) defaults for most cases
+While it does not seek to mirror all of `find` powerful functionality, it provides sensible (opinionated) defaults for most cases
 
 * Search by regex
 * Search matches the file/directory name (not in the path)
@@ -317,7 +345,7 @@ find -iname "*pattern*"
 * Case sensitive searches: `--case-sensitive`
 * Case insensitive searches: `--ignore-case`
 
-```shell
+```bash
 # Search following symlinks, including hidden directories/files & .gitignore patterns
 fd --follow --hidden --no-ignore <pattern>
 ```
@@ -326,10 +354,10 @@ fd --follow --hidden --no-ignore <pattern>
 
 ## Filter search results
 
-* Filter search results by type: `--type <file|directory|symlink>`
+* Filter search results by filetype: `--type <file|directory|symlink>`
 * Filter search results by extension: `--extension <extension>`
 
-```shell
+```bash
 # Search only PHP files
 fd --type file --extension php <pattern>
 ```
@@ -338,7 +366,7 @@ fd --type file --extension php <pattern>
 
 ## Execute commands
 
-* Execute command for each search result: `--exec <command>`
+* Execute a command in parallel for each search result: `--exec <command>`
 * Available tokens can be used in the command
   * `{}`: places the input in the location of this token
   * `{.}`: like `{}` but without the file extension
@@ -346,7 +374,7 @@ fd --type file --extension php <pattern>
   * `{/.}`: places the basename of the input, without the extension
   * `{//}`: places the parent of the input
 
-```shell
+```bash
 # Convert all JPG files to PNG files
 fd --extension jpg --exec convert {} {.}.png
 ```
@@ -367,9 +395,9 @@ fd --extension jpg --exec convert {} {.}.png
 
 * Exclude entries that match the given *glob pattern*: `--exclude`
 * In the search results, show the full path from the root: `--absolute-path`
-* Using fd with xargs or parallel requires to separate the results by the NULL character (instead of newlines): `--print0`
+* Using fd with `xargs` or `parallel` requires to separate the results by the `NULL` character (instead of newlines): `--print0`
 
-```shell
+```bash
 # Search including hidden directories & files, but exclude .git
 fd --hidden --exclude .git <pattern>
 
@@ -388,17 +416,23 @@ layout: true
 
 ---
 
-ripgrep is a line-oriented search tool that recursively searches your current directory for a regex pattern
+ripgrep is a line-oriented search tool that recursively searches your current directory for a regex pattern. It is similar to other popular search tools like The Silver Searcher, ack and grep
 
 [Github project](https://github.com/BurntSushi/ripgrep)
 
-Alternatives: ack, the silver searcher (ag), git grep (only for git repositories)
+---
+
+## Installation
+
+* On Debian/Ubuntu download the adequate `.deb` package from the [release page](https://github.com/BurntSushi/ripgrep/releases) and install it using `sudo dpkg -i <package>`
+  * On Ubuntu it can be installed from the `snap` store: `sudo snap install rg`
+* Also can be installed using `cargo`, the Rust package manager: `cargo install ripgrep`
 
 ---
 
 ## Simple syntax
 
-```shell
+```bash
 rg <pattern>
 ```
 
@@ -407,7 +441,7 @@ rg <pattern>
 ## Sensible defaults
 
 * Regex search
-  * Features like backreferences and arbitrary lookaround are not supported
+  * But features like backreferences and arbitrary lookaround are not supported
 * Search in current directory
 * Respect `.gitignore`
 * Exclude hidden directories & files
@@ -425,11 +459,11 @@ rg <pattern>
 * Include patterns defined in  `.gitignore`: `--no-ignore`
 * Include binary files: `--text` or `-a`
 * Follow symlinks directories: `--follow` or `-L`
-* Smart case search (the search is case-insensitive if all characters are lowercase, otherwise it is case-sensitive): `--smart-case` or `-S`
-* Case sensitive searches: `--case-sensitive` or `-s`
+* Case sensitive searches (default): `--case-sensitive` or `-s`
 * Case insensitive searches: `--ignore-case` or `-i`
+* Smart case search (the search is case-insensitive if all characters are lowercase, otherwise it is case-sensitive): `--smart-case` or `-S`
 
-```shell
+```bash
 # Search following symlinks, including hidden directories/files & .gitignore patterns
 rg --follow --hidden --no-ignore <pattern>
 ```
@@ -438,13 +472,13 @@ rg --follow --hidden --no-ignore <pattern>
 
 ## Filter search results
 
-* Filter by file type: `-t <type>`
+* Filter by file type (a type is related to a list of file extensions): `-t <type>`
   * Exclude by file type: `-T <type>`
   * List all available types: `rg --type-list`
 * Include or exclude files and directories for searching that match the given glob: `-g <glob>`
-  * Precede a glob with a ! to exclude it
+  * Precede a glob with a `!` to exclude it
 
-```shell
+```bash
 # Search in TXT files
 rg -t txt <pattern> # TXT type is configured to search *.txt
 rg -g "*.txt" <pattern>
@@ -460,6 +494,13 @@ rg -g "*.txt" <pattern>
 * Show lines before & after each match: `--context <num>` or `-C <num>`
   * Show lines before each match: `-B <num>`
   * Show lines after each match: `-A <num>`
+
+---
+
+## And much more features ...
+
+* Invert matching: `-v` or `--invert-match`
+* Search in compressed files: `-z` or `--search-zip`
 
 ---
 
@@ -479,7 +520,7 @@ It is really fast & portable.
 
 ## Installation & upgrading
 
-```shell
+```bash
 # Installation
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
@@ -494,7 +535,7 @@ cd ~/.fzf && git pull && ./install
 
 fzf will launch interactive finder, read the list from STDIN, and write the selected item to STDOUT. Without STDIN pipe, fzf will use find command to fetch the list of files excluding hidden ones (the default command can be modified with `FZF_DEFAULT_COMMAND`)
 
-```shell
+```bash
 find -type f | fzf > selected
 
 # Open selected file in vim
@@ -549,7 +590,7 @@ vim $(fzf)
 * By default starts in fullscreen mode, but you can make it start below the cursor using `--height` option
 * By default the layout is "bottom-up", but you can make it "top-down" layout using `--reverse` option
 
-```shell
+```bash
 find -type f | fzf --height 40% --reverse
 ```
 
@@ -579,7 +620,7 @@ The install script will setup the following key bindings for bash, zsh, and fish
 * Process IDs for `kill` command
 * Host names (names are extracted from `/etc/hosts` & `~/.ssh/config`)
 
-```shell
+```bash
 # Files under current directory (multiple selection)
 vim **<TAB>
 # Files under ~/github directory that matches pattern (multiple selection)
@@ -624,18 +665,17 @@ ssh **<TAB>
 
 ## My custom configuration in .zshrc
 
-```shell
-export FZF_DEFAULT_OPTS="--multi --reverse --border --inline-info
-  --preview '([ -e {} ] && (head -20 {} || tree -C {} | head -20) || (echo {}))
-    2> /dev/null'
+```bash
+export FZF_DEFAULT_OPTS="--multi --reverse --border --inline-info \
+  --preview '([ -e {} ] && (head -20 {} || tree -C {} | head -20) || (echo {})) 2> /dev/null' \
   --preview-window=right:40%:wrap"
 export FZF_CTRL_R_OPTS="--no-preview"
 export FZF_CTRL_T_OPTS="--bind 'ctrl-x:execute(code -r {})'"
 
 # fzf + fd
-export FZF_DEFAULT_COMMAND="(fd --hidden --exclude .git --follow || 
-  git ls-tree -r --name-only HEAD ||
-  (find . -path \"*/\.*\" -prune -o -type f -print -o -type l -print | sed s/^..//))
+export FZF_DEFAULT_COMMAND="(fd --hidden --exclude .git --follow || \
+  git ls-tree -r --name-only HEAD || \
+  (find . -path \"*/\.*\" -prune -o -type f -print -o -type l -print | sed s/^..//)) \
   2> /dev/null"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
@@ -687,8 +727,14 @@ The majority of programs for Xorg (the most popular display server among Linux u
 * Gnome Terminal
   * Copy & paste to/from the `CLIPBOARD` selection is done using `CTRL-SHIFT-C`/`CTRL-SHIFT-V`
   * Paste from the `PRIMARY` selection: `SHIFT-INSERT`
-  * Paste from the `CLIPBOARD` selection: `CTRL-SHIFT-INSERT`
-  * Copy to the `CLIPBOARD` selection: `CTRL-INSERT`
+  * Paste from the `CLIPBOARD` selection: `CTRL-SHIFT-INSERT` !!
+  * Copy to the `CLIPBOARD` selection: `CTRL-INSERT` !!
+
+---
+
+## Command line copy/paste to/from the clipboards
+
+TODO: xclip & xsel
 
 ---
 
