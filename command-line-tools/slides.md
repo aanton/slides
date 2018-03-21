@@ -470,7 +470,7 @@ rg --follow --hidden --no-ignore <pattern>
 
 ---
 
-## Filter search results
+## Filter search files
 
 * Filter by file type (a type is related to a list of file extensions): `-t <type>`
   * Exclude by file type: `-T <type>`
@@ -497,7 +497,7 @@ rg -g "*.txt" <pattern>
 
 ---
 
-## And much more features ...
+## And more features ...
 
 * Invert matching: `-v` or `--invert-match`
 * Search in compressed files: `-z` or `--search-zip`
@@ -550,17 +550,19 @@ vim $(fzf)
 * Searches are "smart case"
 * Latin letters are normalized before matching
 * Selects only one result
+* Results are sorted by its algorithm
 
 ---
 
 ## Using the finder: But defaults can be changed
 
 * Enable exact search (without "quote" every word): `fzf -e` or `fzf --exact`
+* Disable "extended-search mode": `fzf +x` or `fzf --no-extended`
 * Case insensitive searches: `fzf -i`
 * Case case sensitive searches: `fzf +i`
-* Disable "extended-search mode": `fzf +x` or `fzf --no-extended`
-* Enable multiple selections: `fzf -m`
 * Disable latin letters normalization: `fzf --literal`
+* Enable multiple selections: `fzf -m`
+* Do not sort the results (keep input order): `fzf +s` or `fzf --no-sort`
 
 ---
 
@@ -595,7 +597,8 @@ find -type f | fzf --height 40% --reverse
 ```
 
 * Preview window is available with the `preview` option
-  * fzf automatically starts external process (eq. head files or tree directories) with the current line as the argument and shows the result in the split window
+  * fzf automatically starts external process with the current line as the argument and shows the result in the split window
+    * Recommendation for a good performance: use `head -20` for files & `tree -C | head -10` for directories
   * Its position is configured with the `--preview-window` option
 
 ---
@@ -604,11 +607,11 @@ find -type f | fzf --height 40% --reverse
 
 The install script will setup the following key bindings for bash, zsh, and fish.
 
-* `CTRL-T`: Paste the selected files and directories onto the command line
-* `CTRL-R`: Paste the selected command from history onto the command line
+* `<CTRL-T>`: Paste the selected files and directories onto the command line
+* `<CTRL-R>`: Paste the selected command from history onto the command line
   * Sorting is disabled by default to respect chronological ordering
-  * You can dynamically enable sorting by pressing `CTRL-R` again, but if you like it to be enabled by default, add `--sort` to `FZF_CTRL_R_OPTS`
-* `ALT-C`: cd into the selected directory
+  * You can dynamically enable sorting by pressing `<CTRL-R>` again, but if you like it to be enabled by default, add `--sort` to `FZF_CTRL_R_OPTS`
+* `<ALT-C>`: cd into the selected directory
 
 ---
 
@@ -633,6 +636,7 @@ cd ~/github/pattern**<TAB>
 
 # Search processes (no trigger sequence)
 kill -9 <TAB>
+
 # Search hostnames
 ssh **<TAB>
 ```
@@ -644,22 +648,22 @@ ssh **<TAB>
 * A few environment variables are available to configure fzf:
   * The default command: `FZF_DEFAULT_COMMAND`
   * The default options: `FZF_DEFAULT_OPTS`
-  * The command & options for each command-line key binding
+  * The command & options for each command-line key binding (eg. `FZF_CTRL_T_COMMAND`, `FZF_CTRL_T_OPTS`)
   * The completion options & trigger
 
 ---
 
-## My .zshrc configuration
+## My custom configuration in .zshrc
 
 * Multiple selections by default
-* Preview files (`head -20`) & directories (`tree | head -20`), but not in "history navigation"
+* Preview files & directories, but not in "history navigation"
 * When using `CTRL+T` to search files, bind `CTRL+X` to open selection in vscode
 * Integrate with [fd](https://github.com/sharkdp/fd): a simple, fast and user-friendly alternative to find
   * Respect .gitignore (default)
   * Include hidden files & directories (excluded byd default), but .git: `--hidden --exclude .git`
   * Descend into symlinked directories: `--follow`
 * Add `CTRL+P` key binding in zsh (similar than SublimeText & vscode)
-* Aliases using fzf & git
+* Useful aliases using fzf & git
 
 ---
 
