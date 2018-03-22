@@ -1,13 +1,13 @@
 # Command-line tools
 
-## Whoami
+## whoami
 
 @aanton
 
 ## Agenda
 
-* ZSH
-* Oh my ZSH
+* Zsh
+* Oh my Zsh
 * Z
 * fd
 * ripgrep
@@ -18,7 +18,7 @@
 
 layout: true
 
-# ZSH
+# Zsh
 
 ---
 
@@ -141,7 +141,7 @@ setopt hist_ignore_all_dups
 
 ---
 
-## My custom aliases in .zshrc
+## My aliases
 
 ```bash
 # Alias Git
@@ -171,11 +171,11 @@ alias dips="docker inspect --format \
 
 ---
 
-## References
+## Resources
 
-* [Use ZSH](http://fendrich.se/blog/2012/09/28/no/)
+* [Use Zsh](http://fendrich.se/blog/2012/09/28/no/)
 * [Master Your Z Shell with These Outrageously Useful Tips](http://reasoniamhere.com/2014/01/11/outrageously-useful-tips-to-master-your-z-shell/)
-* [Ten ZSH tricks (youtube)](https://www.youtube.com/watch?v=avr_sCFKthw)
+* [Ten Zsh tricks (youtube)](https://www.youtube.com/watch?v=avr_sCFKthw)
 
 ---
 
@@ -185,7 +185,7 @@ layout: true
 
 ---
 
-Oh-My-Zsh is an open source, community-driven framework for managing your ZSH configuration. It comes bundled with a ton of helpful functions, helpers, plugins, themes, and a few things that make you shout...
+Oh-My-Zsh is an open source, community-driven framework for managing your Zsh configuration. It comes bundled with a ton of helpful functions, helpers, plugins, themes, and a few things that make you shout...
 
 [Project home](http://ohmyz.sh/)
 
@@ -217,7 +217,7 @@ sudo apt-get install fonts-powerline
 echo "\ue0b0 \u00b1 \ue0a0 \u27a6 \u2718 \u26a1 \u2699"
 ```
 
-* My current theme: [Agnoster](https://github.com/agnoster/agnoster-zsh-theme)
+* My favourite theme: [Agnoster](https://github.com/agnoster/agnoster-zsh-theme)
   * Simple configuration to hide my user name
 
 ```bash
@@ -653,21 +653,19 @@ ssh **<TAB>
 
 ---
 
-## My custom configuration in .zshrc
+## My fzf customizations
 
 * Multiple selections by default
-* Preview files & directories, but not in "history navigation"
-* When using `CTRL+T` to search files, bind `CTRL+X` to open selection in vscode
+* Preview files & directories at 40% right, but not in "history navigation"
+* When using `<CTRL+T>` to search files, bind `<CTRL+X>` to open selection in vscode
 * Integrate with [fd](https://github.com/sharkdp/fd): a simple, fast and user-friendly alternative to find
-  * Respect .gitignore (default)
-  * Include hidden files & directories (excluded byd default), but .git: `--hidden --exclude .git`
-  * Descend into symlinked directories: `--follow`
-* Add `CTRL+P` key binding in zsh (similar than SublimeText & vscode)
-* Useful aliases using fzf & git
+  * Exclude patterns defined in `.gitignore` (default), include hidden files & directories, exclude .git & follow symlinked directories
+* Add `<CTRL+P>` key binding (similar than SublimeText & vscode) in Zsh
+* Custom aliases using fzf & git
 
 ---
 
-## My custom configuration in .zshrc
+## My fzf customizations
 
 ```bash
 export FZF_DEFAULT_OPTS="--multi --reverse --border --inline-info \
@@ -694,7 +692,7 @@ alias grebase="git rebase -i \$(git log --pretty=oneline | fzf +m | awk '{print 
 
 ---
 
-## References
+## Resources
 
 * [Tips key bindigns](https://github.com/junegunn/fzf/wiki/Configuring-shell-key-bindings)
 * [fzf examples](https://github.com/junegunn/fzf/wiki/examples)
@@ -750,11 +748,11 @@ TODO: xclip & xsel
 * Optional `PRIMARY` and `CLIPBOARD` selections synchronization
 * GUI & CLI modes
 
-My current clipboard manager is [ClipIt](https://sourceforge.net/projects/gtkclipit/)
+My clipboard manager is [ClipIt](https://sourceforge.net/projects/gtkclipit/)
 
 ---
 
-## References
+## Resources
 
 * https://wiki.archlinux.org/index.php/Clipboard
 * https://fernandobasso.github.io/en/shell/copy-paste-from-command-line-xclip-xsel-clipboard.html
