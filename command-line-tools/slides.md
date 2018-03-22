@@ -105,7 +105,7 @@ Bash is recommended for scripting. Use **shebang** in your scripts!
 
 ---
 
-## Globing & completion
+## Globbing & completion
 
 * Expand the matched files/directories in the command-line: `ls -l **/*.png<TAB>`
 
