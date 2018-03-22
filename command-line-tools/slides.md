@@ -1,6 +1,6 @@
 layout: true
 
-# Command-line tools
+# Command line tools
 
 ---
 
@@ -564,7 +564,7 @@ cd ~/.fzf && git pull && ./install
 
 ---
 
-## Command-line usage
+## Usage
 
 fzf will launch interactive finder, read the list from STDIN, and write the selected item to STDOUT. Without STDIN pipe, fzf will use find command to fetch the list of files excluding hidden ones (the default command can be modified with `FZF_DEFAULT_COMMAND`)
 
@@ -852,7 +852,7 @@ My clipboard manager is [ClipIt](https://sourceforge.net/projects/gtkclipit/)
 
 layout: false
 
-# Command-line tools
+# Command line tools
 
 ## Maybe in a near future
 
