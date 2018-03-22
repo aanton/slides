@@ -865,3 +865,5 @@ layout: false
 * SSH
 
 ## Thanks ! Feedback is much appreciated !
+
+[Github](https://github.com/aanton/slides/)
