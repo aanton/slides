@@ -137,6 +137,7 @@ setopt hist_ignore_all_dups
 ## And much more features ...
 
 * Spelling correction
+* [Syntax highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
 * Themeable prompts: left & right
 * Loadable modules (eg. zmv: massive rename)
 * Frameworks (eg. ohmyzsh)
