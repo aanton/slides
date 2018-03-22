@@ -23,14 +23,14 @@ layout: true
 ## Don't Repeat Yourself (DRY)
 
 * Use aliases
-  * Look for existing aliases, learn from them & ...
-  * and create your custom aliases
-* Use shell functions
-  * Look for existing shell functions, learn from them & ...
-  * and create your custom shell functions
+  * Look for existing aliases, use them, learn from them &
+  * create your own ones according to your needs
+* Use tools & functions
+  * Look for existing tools & functions, use them, learn from them &
+  * create your own ones according to your needs
 * Use key bindings
-  * Learn your shell key bindings ...
-  * and create your custom key bindings
+  * Learn the key bindings of your shell, learn the key bindings of the tools &
+  * create your own ones according to your needs
 
 Please, keep learning & **boost your command-line productivity** !
 
