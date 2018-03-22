@@ -6,13 +6,13 @@
 
 ## Agenda
 
-* Zsh
-* Oh my Zsh
-* Z
-* fd
-* ripgrep
-* fzf
-* Clipboards
+* [Zsh](#zsh)
+* [Oh my Zsh](#ohmyzsh)
+* [Z](#z)
+* [fd](#fd)
+* [ripgrep](#ripgrep)
+* [fzf](#fzf)
+* [Clipboards](#clipboards)
 
 ---
 
@@ -21,6 +21,8 @@ layout: true
 # Zsh
 
 ---
+
+name: zsh
 
 Zsh is a UNIX command interpreter (shell) usable as an interactive login shell and as a shell script command processor. Of the standard shells, zsh most closely resembles ksh but includes many enhancements.
 
@@ -185,6 +187,8 @@ layout: true
 
 ---
 
+name: ohmyzsh
+
 Oh-My-Zsh is an open source, community-driven framework for managing your Zsh configuration. It comes bundled with a ton of helpful functions, helpers, plugins, themes, and a few things that make you shout...
 
 [Project home](http://ohmyz.sh/)
@@ -248,6 +252,8 @@ layout: true
 
 ---
 
+name: z
+
 Tracks your most used directories, based on 'frecency'. After a short learning phase, z will take you to the most 'frecent' directory that matches ALL of the regexes given on the command line, in order.
 
 > Frecency is any heuristic that combines the frequency and recency into a single measure.
@@ -295,6 +301,8 @@ layout: true
 # fd
 
 ---
+
+name: fd
 
 A simple, fast and user-friendly alternative to `find`
 
@@ -416,6 +424,8 @@ layout: true
 
 ---
 
+name: ripgrep
+
 ripgrep is a line-oriented search tool that recursively searches your current directory for a regex pattern. It is similar to other popular search tools like The Silver Searcher, ack and grep
 
 [Github project](https://github.com/BurntSushi/ripgrep)
@@ -509,6 +519,8 @@ layout: true
 # fzf
 
 ---
+
+name: fzf
 
 A command-line fuzzy finder. An interactive Unix filter for command-line that can be used with any list: files, command history, processes, hostnames, git commits, etc.
 
@@ -658,7 +670,7 @@ ssh **<TAB>
 * Multiple selections by default
 * Preview files & directories at 40% right, but not in "history navigation"
 * When using `<CTRL+T>` to search files, bind `<CTRL+X>` to open selection in vscode
-* Integrate with [fd](https://github.com/sharkdp/fd): a simple, fast and user-friendly alternative to find
+* Integrate with [fd](#fd): a simple, fast and user-friendly alternative to find
   * Exclude patterns defined in `.gitignore` (default), include hidden files & directories, exclude .git & follow symlinked directories
 * Add `<CTRL+P>` key binding (similar than SublimeText & vscode) in Zsh
 * Custom aliases using fzf & git
@@ -704,6 +716,8 @@ layout: true
 # Clipboards
 
 ---
+
+name: clipboards
 
 ## Understanding clipboards
 
