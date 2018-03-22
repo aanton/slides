@@ -1,4 +1,8 @@
+layout: true
+
 # Command-line tools
+
+---
 
 ## whoami
 
@@ -13,6 +17,22 @@
 * [ripgrep](#ripgrep)
 * [fzf](#fzf)
 * [Clipboards](#clipboards)
+
+---
+
+## Don't Repeat Yourself (DRY)
+
+* Use aliases
+  * Look for existing aliases, learn from them & ...
+  * and create your custom aliases
+* Use shell functions
+  * Look for existing shell functions, learn from them & ...
+  * and create your custom shell functions
+* Use key bindings
+  * Learn your shell key bindings ...
+  * and create your custom key bindings
+
+Please, keep learning & **boost your command-line productivity** !
 
 ---
 
