@@ -713,17 +713,17 @@ alias grebase="git rebase -i \$(git log --pretty=oneline | fzf +m | awk '{print 
 
 layout: true
 
-# Clipboards
+# ~~Clipboards~~ Selections
 
 ---
 
 name: clipboards
 
-## Understanding clipboards
+## Understanding selections
 
-There are three "clipboards" defined in the "Inter-Client Communication Conventions Manual": `PRIMARY`, `SECONDARY` (used inconsistently) & `CLIPBOARD`.
+There are three "selections" defined in the "Inter-Client Communication Conventions Manual": `PRIMARY`, `SECONDARY` (used inconsistently) & `CLIPBOARD`.
 
-The majority of programs for Xorg (the most popular display server among Linux users) treat the the `PRIMARY` and `CLIPBOARD` selections in the following way:
+The majority of programs for Xorg (the most popular display server among Linux users) treat the selections in the following way:
 
 * The `CLIPBOARD` selection is used for explicit copy/paste commands involving keyboard shortcuts or menu items
   * It behaves like the single-clipboard system on Windows
@@ -748,19 +748,75 @@ The majority of programs for Xorg (the most popular display server among Linux u
 
 ---
 
-## Command line copy/paste to/from the clipboards
+## Using selections with commands input/output: xclip
 
-TODO: xclip & xsel
+```bash
+sudo apt-get install xclip
+```
+
+* Copy `STDOUT` or the content of a file to selection
+
+```bash
+ls -l | xclip # defaults to primary selection
+ls -l | xclip -selection clipboard
+xclip < file
+xclip -selection clipboard < file
+```
+
+* Send the content of selections to a file or a command
+
+```bash
+xclip -out > file # defaults to primary selection
+xclip -out -selection clipboard > file
+xclip -out | vim - # vim can read from STDIN if you start it with the - argument
+xclip -out -selection clipboard | vim -
+```
+
+* And more features: rich texts in clipboard selections
+
+```bash
+xclip -out -selection clipboard -t TARGETS
+```
+
+---
+
+## Using selections with commands input/output: xsel
+
+```bash
+sudo apt-get install xsel
+```
+
+* Copy `STDOUT` or the content of a file to selection
+
+```bash
+ls -l | xsel # defaults to primary selection
+ls -l | xsel --clipboard
+xsel < file
+xsel -selection clipboard < file
+```
+
+* Send the content of selections to a file or a command
+
+```bash
+xsel > file # defaults to primary selection
+xsel --clipboard > file
+xsel | vim - # vim can read from STDIN if you start it with the - argument
+xsel --clipboard | vim -
+```
+
+* And more features: append input to selection, clear the selection, ...
 
 ---
 
 ## Clipboard managers
 
-* Enable users to manipulate the clipboard
-* Store all the clipboard history and offers an interface to select an ocurrence
-* Optional text search (fixed, regex or fuzzy)
-* Optional `PRIMARY` and `CLIPBOARD` selections synchronization
-* GUI & CLI modes
+* Enable users to manipulate the selections
+* Store all the selections history and offers an GUI/CLI to select an ocurrence
+* Some common features
+  * Text search (fixed, regex or fuzzy)
+  * `PRIMARY` and `CLIPBOARD` selections synchronization
+  * History persistence (vs clean on logout)
+  * Custom key bindings
 
 My clipboard manager is [ClipIt](https://sourceforge.net/projects/gtkclipit/)
 
