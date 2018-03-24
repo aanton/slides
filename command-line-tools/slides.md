@@ -688,17 +688,11 @@ ssh **<TAB>
 
 ## My fzf customizations
 
-* Multiple selections by default
+* Multiple selections by default & some layout customizations
 * Preview files & directories at 40% right, but not in "history navigation"
-* When using `<CTRL+T>` to search files, bind `<CTRL+X>` to open selection in vscode
-* Integrate with [fd](#fd): a simple, fast and user-friendly alternative to find
-  * Exclude patterns defined in `.gitignore` (default), include hidden files & directories, exclude .git & follow symlinked directories
+* Use [fd](#fd) or `git ls-tree` for better performance
+* When searching files, bind `<CTRL+X>` to open selection in vscode
 * Add `<CTRL+P>` key binding (similar than SublimeText & vscode) in Zsh
-* Custom aliases using fzf & git
-
----
-
-## My fzf customizations
 
 ```bash
 export FZF_DEFAULT_OPTS="--multi --reverse --border --inline-info \
@@ -716,12 +710,24 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # fzf bindigs
 bindkey '^P' fzf-file-widget
+```
 
+---
+
+## My fzf customizations
+
+* Aliases using fzf & git
+
+```bash
 # fzf + git
-alias gshow="git show \$(git log --pretty=oneline | fzf +m | awk '{print \$1}')"
+alias gshow="git log --pretty=oneline | fzf +m | cut -d' ' -f1 | xargs -r git show"
 alias gbranch="git checkout \$(git branch -vv | fzf +m | awk '{print \$1}')"
 alias grebase="git rebase -i \$(git log --pretty=oneline | fzf +m | awk '{print \$1}')^"
 ```
+
+<a href="https://asciinema.org/a/172093?autoplay=1" target="_blank">
+  <img src="https://asciinema.org/a/172093.png" width="50%" />
+</a>
 
 ---
 
