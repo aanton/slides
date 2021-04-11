@@ -726,7 +726,7 @@ alias grebase="git rebase -i \$(git log --pretty=oneline | fzf +m | awk '{print 
 ```
 
 <a href="https://asciinema.org/a/172093?autoplay=1" target="_blank">
-  <img src="https://asciinema.org/a/172093.png" width="50%" />
+  <img src="https://asciinema.org/a/172093.svg" width="50%" />
 </a>
 
 ---
